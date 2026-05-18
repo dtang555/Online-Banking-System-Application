@@ -1,0 +1,5 @@
+com/mycompany/frontendservice/endpoint/BalanceEndpoint.class
+com/mycompany/frontendservice/endpoint/LogoutEndpoint.class
+com/mycompany/frontendservice/endpoint/TransferEndpoint.class
+com/mycompany/frontendservice/endpoint/JWTUtil.class
+com/mycompany/frontendservice/endpoint/LoginEndpoint.class

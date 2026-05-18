@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accountdb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accountdb
+  template:
+    metadata:
+      labels:
+        app: accountdb
+    spec:
+      containers:
+      - name: accountdb
+        image: dtang555/coe692:accountdb
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactiondb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactiondb
+  template:
+    metadata:
+      labels:
+        app: transactiondb
+    spec:
+      containers:
+      - name: transactiondb
+        image: dtang555/coe692:transactiondb
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3306
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: accountservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: accountservice
+  template:
+    metadata:
+      labels:
+        app: accountservice
+    spec:
+      containers:
+      - name: accountservice
+        image: dtang555/coe692:accountservice-v2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_URL
+          value: accountdb-service:3306
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactionservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactionservice
+  template:
+    metadata:
+      labels:
+        app: transactionservice
+    spec:
+      containers:
+      - name: transactionservice
+        image: dtang555/coe692:transactionservice-v2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_URL
+          value: transactiondb-service:3306
